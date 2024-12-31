@@ -1,7 +1,7 @@
 resource "aws_security_group" "code_runner_sg" {
   name = "code-runner-sg"
   description = "Security group for code runner EC2 instance"
-  vpc_id = module.vpc.vpc_id
+  vpc_id = var.vpc_id
 
   ingress {
     description = "Allow SSH"
