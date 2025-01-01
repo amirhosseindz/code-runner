@@ -7,6 +7,12 @@ terraform {
     dynamodb_table = "terraform-lock"
     encrypt        = true
   }
+
+  required_providers {
+    tls = {
+      source = "hashicorp/tls"
+    }
+  }
 }
 
 resource "aws_s3_bucket" "terraform_state" {

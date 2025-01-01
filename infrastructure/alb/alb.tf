@@ -28,7 +28,7 @@ resource "aws_alb_target_group" "code_runner_tg" {
   }
 }
 
-resource "aws_alb_listener" "code_runner_alb_listener" {
+resource "aws_alb_listener" "code_runner_http_listener" {
   load_balancer_arn = aws_alb.code_runner_alb.arn
   port = 80
   protocol = "HTTP"
@@ -39,8 +39,27 @@ resource "aws_alb_listener" "code_runner_alb_listener" {
   }
 }
 
-resource "aws_alb_target_group_attachment" "code_runner_attachment" {
+resource "aws_alb_target_group_attachment" "code_runner_http_attachment" {
   target_group_arn = aws_alb_target_group.code_runner_tg.arn
   target_id = var.code_runner_id
   port = 80
+}
+
+resource "aws_alb_listener" "code_runner_https_listener" {
+  load_balancer_arn = aws_alb.code_runner_alb.arn
+  port = 443
+  protocol = "HTTPS"
+  ssl_policy = "ELBSecurityPolicy-2016-08"
+  certificate_arn = aws_acm_certificate.self_signed.arn
+
+  default_action {
+    type = "forward"
+    target_group_arn = aws_alb_target_group.code_runner_tg.arn
+  }
+}
+
+resource "aws_alb_target_group_attachment" "code_runner_https_attachment" {
+  target_group_arn = aws_alb_target_group.code_runner_tg.arn
+  target_id = var.code_runner_id
+  port = 443
 }
