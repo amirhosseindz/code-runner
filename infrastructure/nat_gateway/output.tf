@@ -1,3 +1,3 @@
-output "nat_ip" {
-  value = aws_eip.nat_eip.address
+output "nat_ips" {
+  value = [ for nat in aws_eip.nat_eips : nat.address ]
 }
