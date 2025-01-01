@@ -1,11 +1,13 @@
 provider "aws" {
-  region = "eu-central-1"
+  region = var.region
 }
 
 module "vpc" {
   source = "./vpc"
 
-  cidr_block = "10.0.0.0/16"
+  cidr_block        = "10.0.0.0/16"
+  region            = var.region
+  code_runner_sg_id = module.ec2.code_runner_sg_id
 }
 
 module "nat_gateway" {
