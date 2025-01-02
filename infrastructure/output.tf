@@ -1,7 +1,3 @@
-output "alb_dns_name" {
-  value = module.alb.alb_dns_name
-}
-
-output "nat_ips" {
-  value = module.nat_gateway.nat_ips
+output "ec2_public_ip" {
+  value = module.ec2.code_runner_public_ip
 }
